@@ -7,6 +7,7 @@ A desktop application template built with Tauri and Next.js, combining Rust's pe
 ### Prerequisites
 
 - [cargo-generate](https://github.com/cargo-generate/cargo-generate)
+
   ```bash
   cargo install cargo-generate
   ```
@@ -23,50 +24,28 @@ You will be prompted to enter:
 - Window title: The title shown in the application window
 - Project description: A brief description of your project
 
-### Post-generation steps
-
-1. Update the application metadata in:
-
-   - `src-tauri/tauri.conf.json`
-   - `package.json`
-   - `src-tauri/Cargo.toml`
-
-2. Replace the default icons in `src-tauri/icons/` with your application icons
-
-## Tech Stack
-
-- Frontend: Next.js + TypeScript + Tailwind CSS
-- Backend: Tauri (Rust)
-
-## Prerequisites
-
-- Node.js 16.x or later
-- Rust toolchain
-- System dependencies for Tauri (see [Tauri prerequisites](https://tauri.app/v1/guides/getting-started/prerequisites))
-
-## Project Structure
-
-```text
-.
-├── src/          # Next.js frontend
-│   ├── app/      # Next.js app directory
-│   ├── components/# React components
-│   └── styles/   # CSS styles
-├── src-tauri/    # Tauri backend
-│   ├── src/      # Rust source code
-│   └── Cargo.toml# Rust dependencies
-└── package.json  # Node.js dependencies
-```
-
 ## Development
 
-1. Install dependencies:
+1. Set up pre-commit hooks:
+
+```bash
+# Install pre-commit
+pip install pre-commit
+
+# Install required cargo tools
+cargo install cargo-nextest typos-cli git-cliff
+
+# Install the pre-commit hooks at the root of the project
+pre-commit install
+```
+
+2. Install dependencies:
 
 ```bash
 npm install
 ```
 
-2. Start development server:
+3. Start development server:
 
 ```bash
 npm run tauri dev
