@@ -2,5 +2,5 @@
 cargo_generate_version = ">=0.10.0"
 
 [placeholders]
-project-title = { type = "string", prompt = "Project title?" }
-project-description = { type = "string", prompt = "Project description?" }
+project-title = { type = "string", prompt = "Project Title" }
+project-description = { type = "string", prompt = "Project Description" }
