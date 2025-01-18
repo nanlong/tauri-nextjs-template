@@ -5,7 +5,7 @@ module.exports = {
     "^.+\\.(ts|tsx)$": [
       "ts-jest",
       {
-        tsconfig: "src-nextjs/tsconfig.json",
+        tsconfig: "src-nextjs/tsconfig.test.json",
       },
     ],
   },
