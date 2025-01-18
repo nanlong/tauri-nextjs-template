@@ -2,6 +2,5 @@
 cargo_generate_version = ">=0.10.0"
 
 [placeholders]
-github-username = { type = "string", prompt = "GitHub username?" }
 project-title = { type = "string", prompt = "Project title?" }
 project-description = { type = "string", prompt = "Project description?" }
