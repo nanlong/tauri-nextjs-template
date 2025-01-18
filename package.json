@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "next dev src-nextjs",
+    "next": "next src-nextjs",
+    "build": "next build src-nextjs",
+    "lint": "next lint src-nextjs -c src-nextjs/eslint.config.mjs"
   },
   "dependencies": {
     "react": "^19.0.0",
