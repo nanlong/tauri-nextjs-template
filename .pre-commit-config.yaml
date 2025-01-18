@@ -33,7 +33,7 @@ repos:
       - id: check-cargo-tools
         name: Check cargo tools
         description: Check required cargo tools are installed
-        entry: bash -c 'cargo install cargo-nextest'
+        entry: bash -c 'cargo install cargo-nextest typos-cli git-cliff'
         language: rust
         pass_filenames: false
         stages: [commit]
