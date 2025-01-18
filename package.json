@@ -7,7 +7,9 @@
     "tauri": "tauri",
     "next": "next src-nextjs",
     "next-build": "next build src-nextjs",
-    "lint": "next lint src-nextjs -c src-nextjs/eslint.config.mjs"
+    "lint": "next lint src-nextjs -c src-nextjs/eslint.config.mjs",
+    "typecheck": "tsc -p src-nextjs/tsconfig.json --noEmit",
+    "test": "jest src-nextjs --passWithNoTests"
   },
   "dependencies": {
     "@tauri-apps/api": "^2.2.0",

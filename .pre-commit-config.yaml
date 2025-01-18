@@ -28,13 +28,6 @@ repos:
         types_or: [javascript, jsx, ts, tsx, css, json]
         exclude: ^src-tauri/
 
-  - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
-    rev: v9.11.0
-    hooks:
-      - id: commitlint
-        stages: [commit-msg]
-        additional_dependencies: ['@commitlint/config-conventional']
-
   - repo: local
     hooks:
       - id: check-cargo-tools
@@ -85,3 +78,26 @@ repos:
         files: ^src-tauri/.*\.rs$
         pass_filenames: false
 
+      - id: next-lint
+        name: next lint
+        description: Run Next.js linting
+        entry: bash -c 'npm run lint'
+        language: node
+        files: ^src-nextjs/.*\.(js|jsx|ts|tsx)$
+        pass_filenames: false
+
+      - id: next-typecheck
+        name: TypeScript type checking
+        description: Check TypeScript types
+        entry: bash -c 'npm run typecheck'
+        language: node
+        files: ^src-nextjs/.*\.(ts|tsx)$
+        pass_filenames: false
+
+      - id: next-test
+        name: next test
+        description: Run Next.js tests
+        entry: bash -c 'npm run test'
+        language: node
+        files: ^src-nextjs/.*\.(js|jsx|ts|tsx)$
+        pass_filenames: false
