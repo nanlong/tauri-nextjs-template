@@ -11,56 +11,76 @@ repos:
       - id: check-toml
       - id: check-json
       - id: end-of-file-fixer
+        exclude: ^LICENSE.*$
       - id: mixed-line-ending
       - id: trailing-whitespace
+
   - repo: https://github.com/ComPWA/taplo-pre-commit
     rev: v0.9.3
     hooks:
       - id: taplo-format
+        files: ^src-tauri/.*\.(toml)$
+
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v3.1.0
     hooks:
       - id: prettier
         types_or: [javascript, jsx, ts, tsx, css, json]
+        exclude: ^src-tauri/
+
   - repo: https://github.com/pre-commit/mirrors-eslint
     rev: v8.56.0
     hooks:
       - id: eslint
         files: \.(js|jsx|ts|tsx)$
         types: [file]
+        exclude: ^src-tauri/
         additional_dependencies:
           - eslint
           - '@typescript-eslint/parser'
           - '@typescript-eslint/eslint-plugin'
+
   - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
     rev: v9.11.0
     hooks:
       - id: commitlint
         stages: [commit-msg]
         additional_dependencies: ['@commitlint/config-conventional']
+
   - repo: local
     hooks:
+      - id: check-cargo-tools
+        name: Check cargo tools
+        description: Check required cargo tools are installed
+        entry: bash -c 'cargo install cargo-audit cargo-deny cargo-nextest'
+        language: rust
+        pass_filenames: false
+        stages: [commit]
+
       - id: cargo-fmt
         name: cargo fmt
         description: Format files with rustfmt.
-        entry: bash -c 'cargo fmt -- --check'
+        entry: bash -c 'cd src-tauri && cargo fmt -- --check'
         language: rust
-        files: \.rs$
-        args: []
+        files: ^src-tauri/.*\.rs$
+        pass_filenames: false
+
       - id: cargo-deny
         name: cargo deny check
         description: Check cargo dependencies
-        entry: bash -c 'cargo deny check -d'
+        entry: bash -c 'cd src-tauri && cargo deny check'
         language: rust
-        files: \.rs$
-        args: []
+        files: ^src-tauri/.*\.rs$
+        pass_filenames: false
+
       - id: cargo-audit
         name: cargo audit
         description: Audit Cargo.lock for security vulnerabilities
-        entry: bash -c 'cargo audit'
+        entry: bash -c 'cd src-tauri && cargo audit'
         language: rust
-        files: Cargo\.lock$
+        files: ^src-tauri/Cargo\.lock$
         pass_filenames: false
+
       - id: typos
         name: typos
         description: check typo
@@ -68,38 +88,47 @@ repos:
         language: rust
         files: \.*$
         pass_filenames: false
+
       - id: cargo-check
         name: cargo check
         description: Check the package for errors.
-        entry: bash -c 'cargo check --all'
+        entry: bash -c 'cd src-tauri && cargo check --all'
         language: rust
-        files: \.rs$
+        files: ^src-tauri/.*\.rs$
         pass_filenames: false
+
       - id: cargo-clippy
         name: cargo clippy
         description: Lint rust sources
-        entry: bash -c 'cargo clippy --all-targets --all-features --tests --benches -- -D warnings'
+        entry: bash -c 'cd src-tauri && cargo clippy --all-targets --all-features --tests --benches -- -D warnings'
         language: rust
-        files: \.rs$
+        files: ^src-tauri/.*\.rs$
         pass_filenames: false
+
       - id: cargo-test
         name: cargo test
         description: unit test for the project
-        entry: bash -c 'cargo nextest run --all-features --workspace'
+        entry: bash -c 'cd src-tauri && cargo nextest run --all-features --workspace'
         language: rust
-        files: \.rs$
+        files: ^src-tauri/.*\.rs$
         pass_filenames: false
+
+  - repo: local
+    hooks:
       - id: cargo-doc
         name: cargo doc
         description: Check documentation
-        entry: bash -c 'cargo doc --no-deps --all-features'
+        entry: bash -c 'cd src-tauri && cargo doc --no-deps --all-features'
         language: rust
-        files: \.rs$
+        files: ^src-tauri/.*\.rs$
         pass_filenames: false
+        stages: [push]
+
       - id: cargo-tarpaulin
         name: cargo tarpaulin
         description: Check test coverage
-        entry: bash -c 'cargo tarpaulin --ignore-tests'
+        entry: bash -c 'cd src-tauri && cargo install cargo-tarpaulin && cargo tarpaulin --ignore-tests'
         language: rust
-        files: \.rs$
+        files: ^src-tauri/.*\.rs$
         pass_filenames: false
+        stages: [push]
